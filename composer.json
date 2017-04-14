@@ -1,0 +1,38 @@
+{
+    "name": "antalaron/vat-number-validator",
+    "description": "PHP library to validate VAT numbers",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Antal Áron",
+            "email": "antalaron@antalaron.hu"
+        }
+    ],
+    "require": {
+        "symfony/validator": "^2.8|^3.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "*"
+    },
+    "conflict": {
+            "phpunit/phpunit": "<4.8.35|<5.4.3,>=5.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Antalaron\\Component\\VatNumberValidator\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Antalaron\\Component\\VatNumberValidator\\Tests\\": "tests/Tests/"
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.x-dev"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
