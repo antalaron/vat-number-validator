@@ -19,6 +19,33 @@ This command requires you to have Composer installed globally, as explained
 in the [installation chapter](https://getcomposer.org/doc/00-intro.md)
 of the Composer documentation.
 
+Basic usage
+-----------
+
+To validate a VAT number:
+
+```php
+use Antalaron\Component\VatNumberValidator\VatNumber;
+use Symfony\Component\Validator\Validation;
+
+$validator = Validation::createValidator();
+$violations = $validator->validate('ATU37675002', new VatNumber());
+
+if (0 !== count($violations)) {
+    foreach ($violations as $violation) {
+        echo $violation->getMessage().'<br>';
+    }
+}
+```
+
+You can add your own VAT validator via `extraVat` option:
+
+```php
+$violations = $validator->validate('11', new VatNumber(['extraVat' => function ($number) {
+    return 0 !== preg_match('/^(\d{2})$/', $number);
+}]));
+```
+
 Origin
 ------
 
