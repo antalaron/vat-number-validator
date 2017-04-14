@@ -13,7 +13,7 @@ use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 
 /**
- * VatNumberValidator.
+ * Validates a VAT number.
  *
  * @author Antal Áron <antalaron@antalaron.hu>
  */
@@ -85,6 +85,11 @@ class VatNumberValidator extends ConstraintValidator
         // Uppercase, remove spaces etc. from the VAT number to help validation
         $value = preg_replace('/(\s|-|\.)+/', '', strtoupper($value));
 
+        // Check user callable first
+        if (null !== $constraint->extraVat && call_user_func($constraint->extraVat, $value)) {
+            return;
+        }
+
         // Check the string against the regular expressions for all types of
         // VAT numbers
         foreach ($this->schemes as $scheme) {
@@ -94,7 +99,7 @@ class VatNumberValidator extends ConstraintValidator
                 // Call the appropriate country VAT validation routine depending,
                 // on the country code (if the method exists)
                 $method = $match[1].'check';
-                if (!method_exists($this, $method) || $this->$method($match[2])) {
+                if ($this->$method($match[2])) {
                     return;
                 }
 
@@ -278,7 +283,7 @@ class VatNumberValidator extends ConstraintValidator
      *
      * @return bool
      */
-    private function CHcheck($number)
+    private function CHEcheck($number)
     {
         $multipliers = [5, 4, 3, 2, 7, 6, 5, 4];
         $total = 0;

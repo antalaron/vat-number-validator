@@ -2121,4 +2121,36 @@ class VatNumberValidatorTest extends AbstractConstraintValidatorTest
             ['SK7020001680', false],
         ];
     }
+
+    public function testWithoutExtraVat()
+    {
+        $this->validator->validate('11316385-2-18', new VatNumber());
+        $this->buildViolation(VatNumber::MESSAGE)
+            ->assertRaised();
+    }
+
+    public function testExtraVat()
+    {
+        $this->validator->validate('11316385-2-18', new VatNumber(['extraVat' => function ($number) {
+            if (0 === preg_match('/^(\d{11})$/', $number)) {
+                return false;
+            }
+
+            $total = 0;
+            $multipliers = [9, 7, 3, 1, 9, 7, 3];
+
+            for ($i = 0; $i < 7; ++$i) {
+                $total += (int) $number[$i] * $multipliers[$i];
+            }
+
+            $total = 10 - ($total % 10);
+            if (10 === $total) {
+                $total = 0;
+            }
+
+            return $total === (int) $number[7];
+        }]));
+
+        $this->assertNoViolation();
+    }
 }
