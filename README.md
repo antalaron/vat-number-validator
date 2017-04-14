@@ -1,6 +1,8 @@
 VAT number validator
 ====================
 
+[![Build Status](https://travis-ci.org/antalaron/vat-number-validator.svg?branch=master)](https://travis-ci.org/antalaron/vat-number-validator) [![Coverage Status](https://coveralls.io/repos/github/antalaron/vat-number-validator/badge.svg)](https://coveralls.io/github/antalaron/vat-number-validator?branch=master) [![Latest Stable Version](https://poser.pugx.org/antalaron/vat-number-validator/v/stable)](https://packagist.org/packages/antalaron/vat-number-validator) [![Latest Unstable Version](https://poser.pugx.org/antalaron/vat-number-validator/v/unstable)](https://packagist.org/packages/antalaron/vat-number-validator) [![License](https://poser.pugx.org/antalaron/vat-number-validator/license)](https://packagist.org/packages/antalaron/vat-number-validator)
+
 PHP library to validate VAT numbers.
 
 Installation
@@ -16,6 +18,12 @@ $ composer require antalaron/vat-number-validator
 This command requires you to have Composer installed globally, as explained
 in the [installation chapter](https://getcomposer.org/doc/00-intro.md)
 of the Composer documentation.
+
+Origin
+------
+
+This library is the PHP rewrite of [original JavaScript library](http://www.braemoor.co.uk/software/vat.shtml) by Braemoor Software
+Freebies. Original contributors are found [here](http://www.braemoor.co.uk/software/vatupdates.shtml).
 
 License
 -------

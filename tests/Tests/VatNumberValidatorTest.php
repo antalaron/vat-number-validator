@@ -41,6 +41,9 @@ class VatNumberValidatorTest extends AbstractConstraintValidatorTest
         }
     }
 
+    /**
+     * @see http://www.braemoor.co.uk/software/vattest.php
+     */
     public function vatNumberProvider()
     {
         return [
