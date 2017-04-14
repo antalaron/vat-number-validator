@@ -1110,6 +1110,8 @@ class VatNumberValidatorTest extends AbstractConstraintValidatorTest
             ['GB998898400', true],
             ['GB999000005', true],
             ['GB999000047', true],
+            ['GBHA599', true],
+            ['GBHA122', false],
             ['GBGD103', true],
             ['GB999000103', false],
             ['GB999000201', false],

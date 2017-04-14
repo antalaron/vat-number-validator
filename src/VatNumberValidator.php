@@ -30,7 +30,7 @@ class VatNumberValidator extends ConstraintValidator
         '/^(AT)U(\d{8})$/',                         // + Austria
         '/^(BE)(0?\d{9})$/',                        // + Belgium
         '/^(BG)(\d{9,10})$/',                       // + Bulgaria
-        '/^(CHE)(\d{9})(MWST|TVA|IVA)?$/',          // + Switzerland
+        '/^(CHE)(\d{9})(MWST|TVA|IVA)?$/',          // + Switzerland (not EU)
         '/^(CY)([0-59]\d{7}[A-Z])$/',               // + Cyprus
         '/^(CZ)(\d{8,10})(\d{3})?$/',               // + Czech Republic
         '/^(DE)([1-9]\d{8})$/',                     // + Germany
@@ -57,8 +57,8 @@ class VatNumberValidator extends ConstraintValidator
         '/^(IE)([7-9][A-Z\*\+)]\d{5}[A-W])$/',      // + Ireland (2)
         '/^(IE)(\d{7}[A-W][AH])$/',                 // + Ireland (3)
         '/^(IT)(\d{11})$/',                         // + Italy
-        '/^(LV)(\d{11})$/',                         // + Latvia
         '/^(LT)(\d{9}|\d{12})$/',                   // + Lithunia
+        '/^(LV)(\d{11})$/',                         // + Latvia
         '/^(LU)(\d{8})$/',                          // + Luxembourg
         '/^(MT)([1-9]\d{7})$/',                     // + Malta
         '/^(NL)(\d{9})B\d{2}$/',                    // + Netherlands
@@ -66,11 +66,11 @@ class VatNumberValidator extends ConstraintValidator
         '/^(PL)(\d{10})$/',                         // + Poland
         '/^(PT)(\d{9})$/',                          // + Portugal
         '/^(RO)([1-9]\d{1,9})$/',                   // + Romania
-        '/^(RU)(\d{10}|\d{12})$/',                  // + Russia
-        '/^(RS)(\d{9})$/',                          // + Serbia
-        '/^(SI)([1-9]\d{7})$/',                     // + Slovenia
-        '/^(SK)([1-9]\d[2346-9]\d{7})$/',           // + Slovakia Republic
+        '/^(RS)(\d{9})$/',                          // + Serbia (not EU)
+        '/^(RU)(\d{10}|\d{12})$/',                  // + Russia (not EU)
         '/^(SE)(\d{10}01)$/',                       // + Sweden
+        '/^(SI)([1-9]\d{7})$/',                     // + Slovenia
+        '/^(SK)([1-9]\d[2346-9]\d{7})$/',           // + Slovakia
     ];
 
     /**
@@ -148,7 +148,7 @@ class VatNumberValidator extends ConstraintValidator
     }
 
     /**
-     * Checks the check digits of a Belgium VAT number.
+     * Checks the check digits of a Belgian VAT number.
      *
      * @param string $number VAT number
      *
@@ -349,7 +349,7 @@ class VatNumberValidator extends ConstraintValidator
     }
 
     /**
-     * Checks the check digits of an Czech Republic VAT number.
+     * Checks the check digits of an Czech VAT number.
      *
      * @param string $number VAT number
      *
@@ -693,7 +693,7 @@ class VatNumberValidator extends ConstraintValidator
     }
 
     /**
-     * Checks the check digits of a UK VAT number.
+     * Checks the check digits of a British VAT number.
      *
      * @param string $number VAT number
      *
@@ -710,7 +710,7 @@ class VatNumberValidator extends ConstraintValidator
 
         // Health authorities
         if ('HA' === substr($number, 0, 2)) {
-            return 499 > (int) substr($number, 2, 5);
+            return 499 < (int) substr($number, 2, 5);
         }
 
         // Standard and commercial numbers
@@ -789,7 +789,7 @@ class VatNumberValidator extends ConstraintValidator
     }
 
     /**
-     * Checks the check digits of an Hungarian VAT number.
+     * Checks the check digits of a Hungarian VAT number.
      *
      * @param string $number VAT number
      *
@@ -976,7 +976,7 @@ class VatNumberValidator extends ConstraintValidator
     }
 
     /**
-     * Checks the check digits of a Luxembourg VAT number.
+     * Checks the check digits of a Luxembourgish VAT number.
      *
      * @param string $number VAT number
      *
@@ -1335,7 +1335,7 @@ class VatNumberValidator extends ConstraintValidator
     }
 
     /**
-     * Checks the check digits of a Slovakian VAT number.
+     * Checks the check digits of a Slovak VAT number.
      *
      * @param string $number VAT number
      *
