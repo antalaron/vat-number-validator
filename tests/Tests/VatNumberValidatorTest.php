@@ -2155,4 +2155,12 @@ class VatNumberValidatorTest extends AbstractConstraintValidatorTest
 
         $this->assertNoViolation();
     }
+
+    /**
+     * @expectedException \Symfony\Component\Validator\Exception\ConstraintDefinitionException
+     */
+    public function testInvalidExtraVat()
+    {
+        $this->validator->validate('11316385-2-18', new VatNumber(['extraVat' => new \stdClass()]));
+    }
 }
