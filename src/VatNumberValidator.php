@@ -678,6 +678,11 @@ class VatNumberValidator extends ConstraintValidator
      */
     private function FRcheck($number)
     {
+        // Valid for 32-bit systems
+        if (4 === PHP_INT_SIZE) {
+            return true;
+        }
+
         if (0 === preg_match('/^\d{11}$/', $number)) {
             return true;
         }
@@ -1343,6 +1348,11 @@ class VatNumberValidator extends ConstraintValidator
      */
     private function SKcheck($number)
     {
+        // Valid for 32-bit systems
+        if (4 === PHP_INT_SIZE) {
+            return true;
+        }
+
         // Check that the modulus of the whole VAT number is 0 - else error
         return 0 === (int) $number % 11;
     }
