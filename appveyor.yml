@@ -8,17 +8,17 @@ clone_folder: c:\projects\vat-number-validator
 environment:
     matrix:
     - dependencies: lowest
-      php_ver_target: 5.6
+      php_ver_target: 5.6.30
     - dependencies: highest
-      php_ver_target: 5.6
+      php_ver_target: 5.6.30
     - dependencies: lowest
-      php_ver_target: 7.0
+      php_ver_target: 7.0.18
     - dependencies: highest
-      php_ver_target: 7.0
+      php_ver_target: 7.0.18
     - dependencies: lowest
-      php_ver_target: 7.1
+      php_ver_target: 7.1.4
     - dependencies: highest
-      php_ver_target: 7.1
+      php_ver_target: 7.1.4
 
 ## Cache composer, chocolatey and php bits
 cache:

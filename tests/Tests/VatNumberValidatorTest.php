@@ -608,6 +608,7 @@ class VatNumberValidatorTest extends AbstractConstraintValidatorTest
             ['CZ699001510', true],
             ['CZ699002447', true],
             ['CZ70904901', true],
+            ['CZ395601439', true],
             ['CZ699001237', false],
 
             // Germany

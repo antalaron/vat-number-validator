@@ -362,9 +362,9 @@ class VatNumberValidator extends ConstraintValidator
 
         $czExpr = [
             '/^\d{8}$/',
-            '/^[0-5][0-9][0|1|5|6]\d[0-3]\d\d{3}$/',
+            '/^[0-5][0-9][0|1|5|6][0-9][0-3][0-9]\d{3}$/',
             '/^6\d{8}$/',
-            '/^\d{2}[0-3|5-8]\d[0-3]\d\d{4}$/',
+            '/^\d{2}[0-3|5-8][0-9][0-3][0-9]\d{4}$/',
         ];
         $i = 0;
 
@@ -386,31 +386,31 @@ class VatNumberValidator extends ConstraintValidator
             // Compare it with the last character of the VAT number. If it's the same, then it's valid.
             return (int) $number[7] === $total;
         }
-        // Individuals type 1
+        // Individuals type 1 (Standard) - 9 digits without check digit
         elseif (0 !== preg_match($czExpr[1], $number)) {
-            return (int) substr($number, 0, 2) <= 53;
+            return (int) substr($number, 0, 2) <= 62;
         }
-        // Individuals type 2
+        // Individuals type 2 (Special Cases) - 9 digits including check digit
         elseif (0 !== preg_match($czExpr[2], $number)) {
             // Extract the next digit and multiply by the counter.
             for ($i = 0; $i < 7; ++$i) {
                 $total += (int) $number[$i + 1] * $multipliers[$i];
             }
 
-            // Establish check digit.
-            $total = 11 - $total % 11;
-            if (10 === $total) {
-                $total = 0;
-            } elseif (11 === $total) {
-                $total = 1;
+            // Establish check digit pointer into lookup table
+            if (0 === $total % 11) {
+                $a = $total + 11;
+            } else {
+                $a = ceil($total / 11) * 11;
             }
+            $pointer = $a - $total;
 
             // Convert calculated check digit according to a lookup table;
-            $lookup = [8, 7, 6, 5, 4, 3, 2, 1, 0, 9, 10];
+            $lookup = [8, 7, 6, 5, 4, 3, 2, 1, 0, 9, 8];
 
-            return $lookup[$total - 1] === (int) $number[8];
+            return $lookup[$pointer - 1] === (int) $number[8];
         }
-        // Individuals type 3
+        // Individuals type 3 - 10 digits
         elseif (0 !== preg_match($czExpr[3], $number)) {
             $temp = (int) substr($number, 0, 2) +
                 (int) substr($number, 2, 2) +
