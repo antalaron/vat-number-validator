@@ -8,14 +8,26 @@ php:
     - 5.6
     - 7.0
     - 7.1
+    - 7.2
     - nightly
     - hhvm
 
 env:
     - VALIDATOR_VERSION="2.7.*"
     - VALIDATOR_VERSION="2.8.*"
-    - VALIDATOR_VERSION="3.2.*"
-    - VALIDATOR_VERSION="3.3.*"
+    - VALIDATOR_VERSION="3.4.*"
+    - VALIDATOR_VERSION="4.0.*"
+
+matrix:
+    fast_finish: true
+    exclude:
+        - php: 5.6
+          env: VALIDATOR_VERSION="4.0.*"
+        - php: 7.0
+          env: VALIDATOR_VERSION="4.0.*"
+    allow_failures:
+        - php: nightly
+        - php: hhvm
 
 before_script:
     - mkdir -p build/logs
