@@ -72,12 +72,11 @@ class VatNumberValidator extends ConstraintValidator
         '/^(SI)([1-9]\d{7})$/',                     // + Slovenia
         '/^(SK)([1-9]\d[2346-9]\d{7})$/',           // + Slovakia
     ];
-    
+
     /**
-     *
-     * @var string Original VAT number 
+     * @var string Original VAT number
      */
-    protected $originalVAT = "";
+    protected $originalVAT = '';
 
     /**
      * {@inheritdoc}
@@ -87,7 +86,7 @@ class VatNumberValidator extends ConstraintValidator
         if (null === $value || '' === $value) {
             return;
         }
-        
+
         //stored original VAT
         $this->originalVAT = $value;
 
@@ -1095,10 +1094,10 @@ class VatNumberValidator extends ConstraintValidator
         if ((int) $number[8] === $total) {
             return true;
         }
-        
-        //Traditional dutch VAT does not match, try to check whether it is a valid sole proprietor vat number
-        
-       // take the original vat string
+
+        // Traditional dutch VAT does not match, try to check whether it is a valid sole proprietor vat number
+
+        // take the original vat string
         $vat = $this->originalVAT;
 
         // Each character in the string is looked at one at a time
@@ -1107,46 +1106,44 @@ class VatNumberValidator extends ConstraintValidator
         // The result of the conversion goes here
         $numericvat = null;
 
-        //part length splitting long numbers in modulo operations 
+        //part length splitting long numbers in modulo operations
         $partLength = 7;
-        
+
         //constant divisor for calculation
         $divisor = 97;
-        
-        for ($i = 0; $i < strlen($vat); $i++) {
 
-            // Pick up the next character from the vat string as Unicode 
+        for ($i = 0; $i < strlen($vat); ++$i) {
+            // Pick up the next character from the vat string as Unicode
             $nextchar = ord(substr($vat, $i, $i + 1));
             // If it a '+' or a '*' convert to numeric 36 and 37 respectively
             if ($nextchar > 41 && $nextchar < 44) {
                 $nextchar = $nextchar - 6;
 
                 // Convert 0 to 9 to 0 to 9 characters
-            } else if ($nextchar > 47 && $nextchar < 58) {
+            } elseif ($nextchar > 47 && $nextchar < 58) {
                 $nextchar = $nextchar - 48;
 
                 // Convert A-Z to 10 to 35
-            } else if ($nextchar > 64 && $nextchar < 91) {
+            } elseif ($nextchar > 64 && $nextchar < 91) {
                 $nextchar = $nextchar - 55;
             }
             // Add to convert test string
-            $numericvat = $numericvat . $nextchar;
+            $numericvat = $numericvat.$nextchar;
         }
 
         while (strlen($numericvat) > $partLength) {
             $part = substr($numericvat, 0, $partLength);
-            $numericvat = ($part % $divisor) . substr($numericvat, $partLength);
+            $numericvat = ($part % $divisor).substr($numericvat, $partLength);
         }
 
-        if (1 == ($numericvat % $divisor)) {
+        if (1 === ($numericvat % $divisor)) {
             return true;
         }
-        
-        
+
         // Neither - it must be invalid
         return false;
     }
-    
+
     /**
      * Checks the check digits of a Norwegian VAT number.
      *

@@ -1681,6 +1681,7 @@ class VatNumberValidatorTest extends AbstractConstraintValidatorTest
             ['NL822667800B01', true],
             ['NL822754812B01', true],
             ['NL823363247B01', true],
+            ['NL001833507B53', true],
             ['NL010000445B01', false],
             ['NL000000025B01', false],
             ['NL000000035B01', false],
